@@ -26,8 +26,17 @@ namespace Anno1800MemoryReader
             population.Artisans = MemoryHelper.ReadIntFromNestedPointer(process, baseAddress, GameAddresses.ArtisanOffsets);
             population.Engineers = MemoryHelper.ReadIntFromNestedPointer(process, baseAddress, GameAddresses.EngineerOffsets);
             population.Investors = MemoryHelper.ReadIntFromNestedPointer(process, baseAddress, GameAddresses.InvestorOffsets);
+
+            if(population.Investors > 0 && GameAddresses.Mode == GameAddressMode.NORMAL)
+            {
+                GameAddresses.Mode = GameAddressMode.LATEGAME;
+                population.Investors = MemoryHelper.ReadIntFromNestedPointer(process, baseAddress, GameAddresses.InvestorOffsets);
+            }
+
             population.Jornaleros = MemoryHelper.ReadIntFromNestedPointer(process, baseAddress, GameAddresses.JornaleroOffsets);
             population.Obreros = MemoryHelper.ReadIntFromNestedPointer(process, baseAddress, GameAddresses.ObreroOffsets);
+
+            
 
             return population;
         }
